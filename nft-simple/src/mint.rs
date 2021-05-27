@@ -24,4 +24,20 @@ impl Contract {
 
         refund_deposit(required_storage_in_bytes);
     }
+
+    #[payable]
+    pub fn nft_mint_test_nft(&mut self, token_id: TokenId) {
+        let token = Token {
+            owner_id: self.owner_id.clone(),
+            approved_account_ids: Default::default(),
+            next_approval_id: 0,
+        };
+        assert!(
+            self.tokens_by_id.insert(&token_id, &token).is_none(),
+            "Token already exists"
+        );
+        let metadata = TokenMetadata::default();
+        self.token_metadata_by_id.insert(&token_id, &metadata);
+        self.internal_add_token_to_owner(&token.owner_id, &token_id);
+    }
 }
