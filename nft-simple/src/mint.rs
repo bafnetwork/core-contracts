@@ -26,9 +26,9 @@ impl Contract {
     }
 
     #[payable]
-    pub fn nft_mint_test_nft(&mut self, token_id: TokenId) {
+    pub fn nft_mint_test_nft(&mut self, owner: AccountId, token_id: TokenId) {
         let token = Token {
-            owner_id: self.owner_id.clone(),
+            owner_id: owner,
             approved_account_ids: Default::default(),
             next_approval_id: 0,
         };
